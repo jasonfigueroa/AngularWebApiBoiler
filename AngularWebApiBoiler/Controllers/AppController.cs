@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AngularWebApiBoiler.Services;
+using AngularWebApiBoiler.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +11,34 @@ namespace AngularWebApiBoiler.Controllers
 {
     public class AppController : Controller
     {
+        private readonly IMailService _mailService;
+
+        public AppController(IMailService mailService)
+        {
+            _mailService = mailService;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet("/contact")]
+        [HttpGet("contact")]
         public IActionResult Contact()
         {
-            ViewBag.Title = "Contact Us";
+            return View();
+        }
 
-            throw new InvalidOperationException("Bad things happened");
+        [HttpPost("contact")]
+        public IActionResult Contact(ContactViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // send email
+                _mailService.SendMessage("jason.figueroa@gmail.com", model.Subject, $"From: {model.Name} - {model.Email}, Message: {model.Message}");
+                ViewBag.UserMessage = "Mail Sent";
+                ModelState.Clear();
+            }
 
             return View();
         }
