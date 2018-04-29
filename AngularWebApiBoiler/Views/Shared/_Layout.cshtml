@@ -6,13 +6,14 @@
 <head>
     <title>Angular Web API Boiler: @ViewBag.Title</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse">
         <header class="container">
             <div class="navbar-header">
-                <div class="navbar-brand">Angular Web API Boiler</div>
+                <div class="navbar-brand"><i class="fa fa-lg fa-rocket" aria-hidden="true"></i> Angular Web API Boiler</div>
                 <button class="navbar-toggle" data-toggle="collapse" data-target="#menu">&#9776;</button>
             </div>
             <div id="menu" class="collapse navbar-collapse">
@@ -25,7 +26,7 @@
         </header>
     </div>
     <section class="container">
-        <h2>@ViewBag.Title</h2>
+        <h2 class="text-center">@ViewBag.Title</h2>
         @RenderBody()
     </section>
     <footer class="container">

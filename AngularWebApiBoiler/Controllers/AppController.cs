@@ -1,4 +1,5 @@
-﻿using AngularWebApiBoiler.Services;
+﻿using AngularWebApiBoiler.Data;
+using AngularWebApiBoiler.Services;
 using AngularWebApiBoiler.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,10 +13,12 @@ namespace AngularWebApiBoiler.Controllers
     public class AppController : Controller
     {
         private readonly IMailService _mailService;
+        private readonly AngularWebApiBoilerContext _context;
 
-        public AppController(IMailService mailService)
+        public AppController(IMailService mailService, AngularWebApiBoilerContext context)
         {
             _mailService = mailService;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -48,6 +51,15 @@ namespace AngularWebApiBoiler.Controllers
             ViewBag.Title = "About Us";
 
             return View();
+        }
+
+        public IActionResult Shop()
+        {
+            var results = from p in _context.Products
+                          orderby p.Category
+                          select p;
+
+            return View(results.ToList());
         }
     }
 }
