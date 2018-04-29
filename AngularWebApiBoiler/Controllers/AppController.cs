@@ -13,12 +13,12 @@ namespace AngularWebApiBoiler.Controllers
     public class AppController : Controller
     {
         private readonly IMailService _mailService;
-        private readonly AngularWebApiBoilerContext _context;
+        private readonly IAngularWebApiBoilerRepository _repository;
 
-        public AppController(IMailService mailService, AngularWebApiBoilerContext context)
+        public AppController(IMailService mailService, IAngularWebApiBoilerRepository repository)
         {
             _mailService = mailService;
-            _context = context;
+            _repository = repository;
         }
 
         public IActionResult Index()
@@ -55,11 +55,9 @@ namespace AngularWebApiBoiler.Controllers
 
         public IActionResult Shop()
         {
-            var results = from p in _context.Products
-                          orderby p.Category
-                          select p;
+            var results = _repository.GetAllProducts();
 
-            return View(results.ToList());
+            return View(results);
         }
     }
 }

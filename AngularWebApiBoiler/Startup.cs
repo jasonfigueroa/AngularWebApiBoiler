@@ -25,6 +25,8 @@ namespace AngularWebApiBoiler
 
             services.AddTransient<DataSeed>();
 
+            services.AddScoped<IAngularWebApiBoilerRepository, AngularWebApiBoilerRepository>();
+
             services.AddMvc();
         }
 
